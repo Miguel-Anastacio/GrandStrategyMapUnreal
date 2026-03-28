@@ -1,21 +1,80 @@
-MIT License
+Copyright (c) 2024 Miguel Anastacio. All rights reserved.
 
-Copyright (c) 2026 Miguel-Anastacio
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    GRAND STRATEGY MAP — SOURCE LICENSE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository contains a free, limited version of the Grand Strategy Map
+plugin for Unreal Engine, provided for personal and non-commercial use.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+The full commercial version is available for purchase at:
+https://www.fab.com/listings/8c3b2783-b71a-4f1e-895e-7a6bbef94929
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+
+────────────────────────────────────────────────────────────────────
+1. PERMITTED USE
+────────────────────────────────────────────────────────────────────
+
+You are free to:
+
+  - Use this software in personal, hobbyist, or non-commercial projects.
+  - Modify the source code for your own personal use.
+  - Study the source code for learning purposes.
+  - Share unmodified copies of this repository, provided this license
+    file is included and no charge is made for the copy.
+
+
+────────────────────────────────────────────────────────────────────
+2. RESTRICTIONS
+────────────────────────────────────────────────────────────────────
+
+You may NOT:
+
+  - Use this software, in whole or in part, in any commercial product,
+    game, application, or service without purchasing a valid commercial
+    license from the link above.
+  - Redistribute, sublicense, or resell this software or any derivative
+    work, whether modified or unmodified.
+  - Upload this plugin (or a modified version of it) to any marketplace,
+    store, or distribution platform, including but not limited to Fab,
+    the Unreal Engine Marketplace, GitHub, or itch.io.
+  - Remove or alter this license notice in any copy or derivative of
+    this software.
+
+
+────────────────────────────────────────────────────────────────────
+3. COMMERCIAL USE
+────────────────────────────────────────────────────────────────────
+
+A "commercial use" includes, but is not limited to:
+
+  - Shipping a game or application that generates revenue (including
+    free-to-play games with monetization).
+  - Using the plugin in a project funded by a client or employer.
+  - Including the plugin in any product sold or licensed to third parties.
+
+If you are unsure whether your use qualifies as commercial, please
+contact: manastacio.dev@gmail.com
+
+
+────────────────────────────────────────────────────────────────────
+4. CONTRIBUTIONS
+────────────────────────────────────────────────────────────────────
+
+By submitting a pull request or contribution to this repository, you
+agree that your contribution is made under the same terms as this
+license, and that the copyright owner may include it in the commercial
+version of this software without additional compensation.
+
+
+────────────────────────────────────────────────────────────────────
+5. DISCLAIMER OF WARRANTIES
+────────────────────────────────────────────────────────────────────
+
+THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.
+
+IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES,
+OR OTHER LIABILITY ARISING FROM THE USE OF OR INABILITY TO USE THIS
 SOFTWARE.
