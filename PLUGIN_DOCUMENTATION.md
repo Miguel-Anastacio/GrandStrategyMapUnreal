@@ -15,7 +15,7 @@
 The **InteractiveGrandStrategyMap** plugin provides a framework for creating interactive maps similar to those in grand strategy games like Europa Universalis 4 and Crusader Kings. It enables procedural map generation using Voronoi diagrams, interactive tile systems, dynamic textures, and data-driven gameplay.
 
 ### Supported Versions
-- **Unreal Engine:** 5.4+, 
+- **Unreal Engine:** 5.4+
 - **Platform:** Windows 64-bit
 
 
@@ -70,10 +70,9 @@ Restart the editor to apply all changes and load the plugin fully.
 
 ## Map Generation Workflow
 
-This section covers the process of generating a map in the editor before integrating it into your game. This step is optional if you already have the files needed for the map to work.
-These are:
-- Lookup table, a JSON file containing IDs and a unique color for each tile
-- Data table (JSON) holding the data for each tile in map form (ID and data)
+This section covers the process of generating a map in the editor before integrating it into your game. This step is optional if you already have the following files:
+- Lookup table: a JSON file containing IDs and a unique color for each tile
+- Data table (JSON) holding the data for each tile in map (data and the struct type name)
 - Lookup texture
 
 For information on importing existing files instead, check [Loading your own data files and lookup texture](#loading-your-own-data-files-and-lookup-texture)
@@ -105,7 +104,9 @@ Define what data each tile will contain:
 4. Add any other properties your tiles will have
 
 Define another struct if you wish for ocean tiles.
-These structures can also be defined in c++. If using a c++ struct as map data, when you modify the struct (add/removing fields), please do not use live coding.
+These structures can also be defined in C++.
+
+> **Note:** If using a C++ struct as map data, do not use Live Coding when adding or removing fields. Restart the editor instead.
 
 ### Step 2: Create a Map Object Asset
 
@@ -161,9 +162,9 @@ Controls the roughness and appearance of tile borders:
 1. Decide if you want to upload borders or not
 2. Set the heightmap texture
 3. Set cutoff height; this determines which pixels are considered land or ocean
-4. Set data structures for ocean and land tiles. If you do not need this separation, a map with cutoff height = 0 will generate only land tiles
-5. In Category Debug, you can set the log level of map generation. Increasing it will reduce logs and speed up map gen
-6. In the Map Object editor, use the Generate Map action to run generation. This might take a bit depending on the number of tiles.
+4. Set data structures for ocean and land tiles. If you do not need this separation, set cutoff height to 0 so that all pixels are treated as land and only land tiles are generated
+5. In the Debug category, you can set the log level of map generation. Increasing it will reduce log output and speed up map generation
+6. In the Map Object editor, use the Generate Map action to run generation. This may take some time depending on the number of tiles.
 
 There is no guarantee that the number of tiles will match the provided value exactly; it is best treated as a target.
 
@@ -172,23 +173,25 @@ There is no guarantee that the number of tiles will match the provided value exa
 After generation, you can edit individual tile data:
 
 1. Open your **Map Object** asset
-2. The asset editor shows all tiles and their data
+2. The asset editor shows all tiles and their data, you can filter by land tiles and ocean tiles by interacting witht the preview images.
 3. Select individual tiles (through the list or by clicking tiles) and modify their properties. You can also select multiple tiles and batch edit them
+
+Tile map data can also be updated from a json file, by using the button `Load Data File` 
 
 ### Step 6: Set Up Visual Properties
 
 Visual Properties define how tile data is represented visually:
 
-1. Create a **Visual Property** definition (class `UVisualProperty`)
+1. Create a **Visual Property** definition (a blueprint with base class `VisualProperty`)
 2. Map data properties to visual outputs:
    - **Example:** Temperature value (float) → Color gradient
    - **Example:** TerrainType (enum) → Specific colors per terrain
 
 3. Add these Visual Properties to your Map Object
 
-**IMPORTANT**: **You must add at least one visual property**
+> **Important:** You must add at least one visual property.
 
-Some common types are provided, such as a string-to-color map.
+Some common types are provided, such as a string-to-color map (`StringMapVisualProperty`) etc.
 
 #### Material Requirements
 
@@ -196,7 +199,7 @@ When creating custom materials for visual properties, ensure they include the re
 
 **Required Parameters:**
 - **LookupTexture** - Reference texture used for tile data lookup
-- **Threshold** - Value threshold for visual representation
+- **Threshold** - This param controls the tolerance when you click on a tile, it should be more than 0 but small. From experience, 0.3 is fine and does not lead to false positives. For reference experiment with the provided materials.
 
 **Optional Features:**
 - **Tile Highlighting** - To highlight hovered tiles, use the provided `MF_Highlight` material function. This enables visual feedback when the player hovers over tiles.
@@ -218,7 +221,7 @@ To populate your `UMapObject` with custom data from JSON files and a specific lo
 ### Prerequisite
 
 Before running the action, ensure you have:
-1.  **Custom Structs:** The `UScriptStruct` definitions for your Land and Ocean data types.
+1.  **Custom Structs:** The struct definitions for your Land and Ocean data types.
 2.  **JSON Files:**
    *   A **Map Data** JSON file containing your tile configurations.
    *   A **Lookup Table** JSON file containing the tile IDs and colors
@@ -259,13 +262,13 @@ The plugin provides the following Blueprints:
 
 #### Flat Map
 - **Controller:** `BP_FlatMapController`
-- **GameMode** `BP_Core_FlatMapGameMode`
-- **Pawn** `BP_Core_MapPawn`
+- **GameMode:** `BP_Core_FlatMapGameMode`
+- **Pawn:** `BP_Core_MapPawn`
 
 #### Globe Map
 - **Controller:** `BP_GlobeMapController`
-- **GameMode** `BP_Core_GlobeMapGameMode`
-- **Pawn** `BP_Core_GlobePawn`
+- **GameMode:** `BP_Core_GlobeMapGameMode`
+- **Pawn:** `BP_Core_GlobePawn`
 
 Since this is provided as an engine plugin, it is recommended to inherit from these. You can use the provided ones to get started.
 For the controllers, the relevant inputs are implemented via input actions in the `Inputs` folder.
@@ -280,7 +283,7 @@ Create the blueprint that will be used in your actual game levels:
    - **Set Map Object:** Select your generated `DA_MyMapData` asset
    - This links your blueprint to the pre-generated map data
 4. Set your map mesh on the gameplay map mesh property for your chosen map actor
-5. Set the start map mode name (IMPORTANT). It must match the name of the visual property that you want to display by default
+5. **IMPORTANT** Set the start map mode name. It must match the name of the visual property that you want to display by default
 
 ### Step 3: Configure Level Settings
 
@@ -324,15 +327,14 @@ This will automatically create the following widgets using the PropertyDisplayGe
 
 These widgets provide a complete starting point for your map's UI. You can customize them further by modifying the generated blueprints. For more information on customizing the data display widgets, refer to the PropertyDisplayGenerator documentation.
 
-Then open the HUD widget created via the action and set its layout.
-
-To use the new UI widgets, set the `Hud Widget Class` field in your HUD class to the HUD widget created by the action.
+4. Open the HUD widget created by the action and set its layout.
+5. In your HUD class, set the `Hud Widget Class` field to the HUD widget created by the action.
 
 This UI setup is a quick starting point, if you wish you can completely ignore this and set up your own UI system. Since this is a very general solution, for your project you probably want something more customizable.
 
 ## Plugin Hooks & Delegates
 
-Further integration and relevant events that can be useful to bind to.
+The plugin exposes the following delegates for gameplay, UI, and map data integration.
 
 ### AClickableMap Delegates
 
@@ -360,4 +362,53 @@ Signature: void(FName OldMode, FName NewMode)
 Usage: Bind to know when visualization changes
 Parameters: Old and new mode names
 ```
+
+### UMapDataComponent Delegates
+
+The map data component exposes delegates for save/load integration and runtime tile data updates.
+
+#### OnSaveMapData
+Fires when the component is ending play and wants to hand off the current runtime tile data to your save system.
+```
+Signature: void(UMapSaveData* MapSaveData)
+Usage: Bind to serialize or store the current runtime map data before the actor/component is destroyed
+Parameters: A `UMapSaveData` object containing the current `SavedMapData` map
+```
+
+#### OnLoadMapData
+Called when the component is initialized with a map object and wants to restore saved runtime tile data.
+```
+Signature: UMapSaveData*()
+Usage: Provide a previously saved `UMapSaveData` instance to restore runtime state instead of using the asset defaults
+Return Value: Return `nullptr` to fall back to the `UMapObject` asset data
+```
+
+### ABirdEyeController Delegates
+
+The base map controller broadcasts these events for input-driven interactions:
+
+#### TileClickedDelegate
+Fires when the player clicks a valid tile.
+```
+Signature: void(int TileID, FInstancedStruct Data)
+Usage: Bind to react to tile selection and update UI/gameplay with tile data
+Parameters: Tile ID and the clicked tile's instanced data payload
+```
+
+#### TileHoveredDelegate
+Fires when the player hovers a tile.
+```
+Signature: void(FColor Color, int TileID)
+Usage: Bind to show hover previews, tooltips, or highlight-related UI
+Parameters: Hovered tile lookup color and tile ID
+```
+
+#### MapClickedDelegate
+Fires when the player clicks the map area but not on a valid tile.
+```
+Signature: void()
+Usage: Bind to clear selection state or hide tile-specific UI panels
+```
+
+
 
